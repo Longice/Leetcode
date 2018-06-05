@@ -1,4 +1,4 @@
-// Approach 1
+// #Approach 1
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -19,5 +19,44 @@ public:
                 maxLength = length;
         }
         return maxLength;
+    }
+};
+
+// #Approach 2
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.length();
+        set<int> c;
+        int i = 0, j = 0, ans = 0;
+        while(i != n & j != n) {
+            if(c.find(s[j]) != c.end()) {
+                c.erase(s[i++]);
+            }
+            else {
+                c.insert(s[j++]);
+                if(ans < j - i)
+                    ans = j - i;
+            }
+        }
+        return ans;
+    }
+};
+
+// #Approach3
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.length();
+        map<char, int> m;
+        int i = 0, j = 0, ans = 0;
+        while(j != n) {
+            if(m.find(s[j]) != m.end()) {
+                i = max(m.at(s[j]) + 1, i);
+            }
+            ans = max(ans, j - i + 1);
+            m[s[j]] = j++;
+        }
+        return ans;
     }
 };
