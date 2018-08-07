@@ -22,3 +22,33 @@ public:
         } 
     }
 };
+
+
+// 分治法
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        if(strs.size() == 0) return "";
+        return longestCommonPrefix(strs, 0, strs.size()-1);
+    }
+    
+    string longestCommonPrefix(vector<string>& strs, int l, int r){
+        if(l == r)
+            return strs[l];
+        else{
+            int m = (l + r) / 2;
+            string lcpLeft = longestCommonPrefix(strs, l, m);
+            string lcpRight = longestCommonPrefix(strs, m+1, r);
+            return commonPrefix(lcpLeft, lcpRight);
+        }
+    }
+    
+    string commonPrefix(string left, string right){
+        int length = min(left.size(), right.size());
+        for(int i = 0; i < length; ++i){
+            if(left[i] != right[i])
+                return left.substr(0, i);
+        }
+        return left.substr(0, length);
+    }
+};
